@@ -1,0 +1,34 @@
+{
+  "cli": {
+    "version": ">= 24.3.0",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal"
+    },
+
+    "preview": {
+      "distribution": "internal"
+    },
+
+    "inte": {
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      },
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://surco-backend-i8pu.onrender.com/surco"
+      }
+    },
+
+    "production": {
+      "autoIncrement": true
+    }
+  },
+
+  "submit": {
+    "production": {}
+  }
+}
