@@ -18,7 +18,7 @@ export default function PAñadirExplotacion({ navigation, route }) {
     const [txtMesCierre, setTxtMesCierre] = useState(exploEditar?.mesCierre ?? '');
     const [alquilado, setAlquilado] = useState(null);
     const [txtImpAlq, setTxtImpAlq] = useState(exploEditar?.impAlq ?? '');
-    const [ultimoCierre, setUltimoCierre] = useState(null);
+    const [ultimoCierre, setUltimoCierre] = useState(false);
 
     const [openCultivos, setOpenCultivos] = useState(false);
     const [openVariedades, setOpenVariedades] = useState(false);
@@ -89,8 +89,8 @@ export default function PAñadirExplotacion({ navigation, route }) {
         const explotacion = {
             nomCampo: txtNomCampo,
             nomFruta: selCultivo,
-            nomVar: selVaried,
-            codFruta: '',
+            nomVar: selVaried?.nomVar,
+            codFruta: selVaried.codFruta,
             numArboles: txtNumArboles,
             alquilado: alquilado,
             impAlq: txtImpAlq,
@@ -157,15 +157,17 @@ export default function PAñadirExplotacion({ navigation, route }) {
 
     useEffect(() => {
         if (exploEditar && variedades.length > 0) {
-            const variedad = variedades.find(
-                (vari) => vari.nomVar === exploEditar.nomVar
+            const varFind = variedades.find(
+                variedad =>
+                    String(variedad.codFruta) ===
+                    String(exploEditar.codFruta)
             );
 
-            if (variedad) {
-                setSelVaried(variedad.nomVar);
+            if (varFind) {
+                setSelVaried(varFind);
             }
         }
-    }, [exploEditar, cultivos]);
+    }, [exploEditar, variedades]);
 
     return (
         <ScrollView style={styles.container}
@@ -243,14 +245,35 @@ export default function PAñadirExplotacion({ navigation, route }) {
                             open={openVariedades}
                             setOpen={setOpenVariedades}
 
-                            value={selVaried || null}
+                            value={
+                                selVaried?.codFruta != null
+                                    ? String(selVaried.codFruta) : null
+                            }
 
                             items={variedades.map((variedad) => ({
-                                label: String(variedad.nomVar),
-                                value: String(variedad.nomVar),
+                                label: variedad.nomVar,
+                                value: String(variedad.codFruta),
                             }))}
 
-                            setValue={setSelVaried}
+                            setValue={(callback) => {
+                                const valorActual =
+                                    selVaried?.codFruta != null
+                                        ? String(selVaried.codFruta) : null;
+
+                                const codFruta = callback(valorActual);
+
+                                if (!codFruta) {
+                                    setSelVaried(null);
+                                    return;
+                                }
+
+                                const varEncontrada = variedades.find(
+                                    variedad =>
+                                        String(variedad.codFruta) === String(codFruta)
+                                );
+
+                                setSelVaried(varEncontrada ?? null);
+                            }}
 
                             placeholder="Seleccione una variedad"
 
@@ -267,7 +290,7 @@ export default function PAñadirExplotacion({ navigation, route }) {
                             }}
 
                             style={[styles.picker, errores.variedad && styles.inputError]}
-
+                            
                             dropDownContainerStyle={{
                                 backgroundColor: '#FFFFFF',
                                 borderColor: '#ddd',
@@ -275,8 +298,7 @@ export default function PAñadirExplotacion({ navigation, route }) {
                                 borderRadius: 8,
                             }}
 
-                            listMode="SCROLLVIEW"
-                            modalTitle='Seleccionar variedad' />
+                            listMode="SCROLLVIEW" />
                     </View>
                 </View>
 

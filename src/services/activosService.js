@@ -2,12 +2,10 @@ import { API_URL } from "./api";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export async function getActivos() {
-  const token = await AsyncStorage.getItem("token");
   const response = await fetch(`${API_URL}/activos`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      "Authorization": `Bearer ${token}`
     }
   });
 

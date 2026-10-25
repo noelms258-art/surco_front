@@ -32,6 +32,9 @@ export default function PInicioSesion({ navigation }) {
       <Text style={styles.text}>Usuario</Text>
       <TextInput
         placeholder='Introduce tu usuario'
+        keyboardType="email-address"
+        autoCapitalize="none"
+        autoCorrect={false}
         style={styles.textInput}
         value={textUsu}
         onChangeText={setTextUsu} />

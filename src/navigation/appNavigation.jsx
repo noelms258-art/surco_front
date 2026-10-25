@@ -35,8 +35,13 @@ import PAñadirTarea from '../../pantallas/explotaciones/Tareas/PAñadirTarea';
 import PDetalleCampo from '../../pantallas/reportes/PDetalleCampo';
 import PRegistroExplotaciones from '../../pantallas/registro/registroExplotaciones/PRegistroExplotaciones';
 import PAñadirExplotacion from '../../pantallas/registro/registroExplotaciones/PAñadirExplotacion';
-
 import { RegistroProvider } from '../utils/RegistroContext';
+import PRegistroActivos from '../../pantallas/registro/registroActivos/PRegistroActivos';
+import PRegistroTerceros from '../../pantallas/registro/registroTerceros/PRegistroTerceros';
+import PAñadirTercero from '../../pantallas/registro/registroTerceros/PAñadirTercero';
+import PRegistroContra from '../../pantallas/registro/PRegistroContra';
+import PDetelleCultivos from '../../pantallas/reportes/ReportesEconomicos/PDetelleCultivos';
+import PDetelleCultivo from '../../pantallas/reportes/ReportesEconomicos/PDetalleCultivo';
 
 
 const Stack = createNativeStackNavigator();
@@ -462,6 +467,87 @@ export default function AppNavigation() {
                 </TouchableOpacity>
               ),
             })}/>
+            <Stack.Screen
+            name='Registro activos'
+            component={PRegistroActivos} 
+            options={({ navigation }) => ({
+              title: 'Registro activos',
+
+              headerLeft: () => (
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.reset({
+                      index: 0,
+                      routes: [{ name: 'Registro explotaciones' }]
+                    });
+                  }}
+                  style={{ paddingRight: 15 }}>
+                  <Ionicons
+                    name="arrow-back"
+                    size={24}
+                    color="#fff" />
+                </TouchableOpacity>
+              )
+            })}/>
+            <Stack.Screen
+            name='Registro terceros'
+            component={PRegistroTerceros} 
+            options={({ navigation }) => ({
+              title: 'Registro terceros',
+
+              headerLeft: () => (
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.reset({
+                      index: 0,
+                      routes: [{ name: 'Registro activos' }]
+                    });
+                  }}
+                  style={{ paddingRight: 15 }}>
+                  <Ionicons
+                    name="arrow-back"
+                    size={24}
+                    color="#fff" />
+                </TouchableOpacity>
+              )
+            })}/>
+            <Stack.Screen
+            name='Añadir tercero'
+            component={PAñadirTercero} 
+            options={({ navigation, route }) => ({
+              title: 'Añadir tercero',
+
+              headerLeft: () => (
+                <TouchableOpacity
+                  onPress={() => {
+                    if (route.params?.primeraEntrada) {
+                      navigation.popTo('Registro activos');
+                    } else {
+                      navigation.goBack();
+                    }
+                  }}
+                  style={{
+                    paddingRight: 15,
+                    paddingVertical: 5,
+                  }}
+                >
+                  <Ionicons
+                    name="arrow-back"
+                    size={28}
+                    color="#FFFFFF"
+                  />
+                </TouchableOpacity>
+              ),
+            })}/>
+            <Stack.Screen
+            name='Protege tu cuenta'
+            component={PRegistroContra} />
+            <Stack.Screen
+            name='Detalle cultivos'
+            component={PDetelleCultivos}/>
+            <Stack.Screen
+            name='Detalle cultivo'
+            component={PDetelleCultivo}/>
         </Stack.Navigator>
 
       </NavigationContainer>

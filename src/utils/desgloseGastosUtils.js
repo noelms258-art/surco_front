@@ -28,23 +28,35 @@ const obtenerColorGasto = (clave) => {
     ];
 };
 
-export const prepararDesgloseGastos = (gastos = {}) => {
+export const prepararDesgloseGastos = (desgloseGastos) => {
 
-    if (!gastos) return [];
+    if (!desgloseGastos) return [];
 
-    return Object.entries(gastos)
+    const categorias = {
+        salarios: {
+            label: "Salarios",
+            color: "#E69B59"
+        },
+        activos: {
+            label: "Activos",
+            color: "#7DAA85"
+        },
+        productos: {
+            label: "Productos",
+            color: "#C39A69"
+        }
+    };
+
+    return Object.entries(desgloseGastos)
         .filter(([clave, valor]) =>
-            clave !== 'codCampo' &&
-            valor !== null &&
-            valor !== '' &&
+            categorias[clave] !== undefined &&
             Number.isFinite(Number(valor)) &&
             Number(valor) > 0
         )
         .map(([clave, valor]) => ({
             id: clave,
-            label: NOMBRES_GASTOS[clave] ??
-                clave.replaceAll('_', ' '),
+            label: categorias[clave].label,
             value: Number(valor),
-            color: obtenerColorGasto(clave),
+            color: categorias[clave].color
         }));
 };

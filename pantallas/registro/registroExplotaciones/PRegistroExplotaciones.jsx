@@ -9,7 +9,7 @@ import { useState, useEffect } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import Toast from 'react-native-toast-message';
 import { useRegistro } from '../../../src/utils/RegistroContext';
-import { toastConfig } from '../../../src/utils/ConfiguracionToast';
+
 
 
 export default function PRegistroExplotaciones({ navigation, route }) {
@@ -56,6 +56,8 @@ export default function PRegistroExplotaciones({ navigation, route }) {
         actualizarRegistro({
             explotaciones: explotaciones
         });
+
+        navigation.navigate('Registro activos')
     };
 
     const mostrarError = (mensaje) => {
@@ -80,7 +82,7 @@ export default function PRegistroExplotaciones({ navigation, route }) {
 
     }, [
         explotaciones.length,
-        route.params?.gasto,
+        route.params?.explotacion,
         navigation
     ]);
 
@@ -135,7 +137,7 @@ export default function PRegistroExplotaciones({ navigation, route }) {
                 <Text style={styles.textGuardar}> Siguiente </Text>
             </TouchableOpacity>
 
-            <Toast config={toastConfig} />
+            <Toast />
 
         </ScrollView>
     );

@@ -3,6 +3,7 @@ import { Entypo, FontAwesome5, MaterialIcons } from '@expo/vector-icons';
 import { useEffect, useState } from 'react';
 import { getIngresosTotales, getGastosTotales } from '../../src/services/reportesEconomicosServices';
 import PGraficaCampos from './Graficas/PGraficaCampos';
+import PGraficaCultivos from './Graficas/PGraficaCultivos';
 
 
 export default function PReportesEconomicos({ navigation }) {
@@ -84,14 +85,7 @@ export default function PReportesEconomicos({ navigation }) {
             <Text style={styles.sectionTitle}>RENDIMIENTO POR CULTIVO</Text>
             <View style={{ alignItems: "center", paddingBottom: 10 }}>
                 <View style={styles.cardGrafica}>
-                    <View>
-                        <Text>Rendimiento por cultivo</Text>
-                    </View>
-                    <View></View>
-                    <View></View>
-                    <View style={styles.grafica}>
-
-                    </View>
+                    <PGraficaCultivos style={styles.graficaCultivo} />
                 </View>
             </View>
         </ScrollView>

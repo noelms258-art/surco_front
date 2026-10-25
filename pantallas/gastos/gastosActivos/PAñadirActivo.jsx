@@ -237,6 +237,7 @@ export default function PAñadirActivo({ navigation, route }) {
             </TouchableOpacity>
 
             <TouchableOpacity
+            onPress={cancelarActivo}
                 style={styles.buttonCancelar}>
                 <Text style={styles.textCancelar}>Cancelar</Text>
             </TouchableOpacity>

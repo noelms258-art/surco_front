@@ -57,7 +57,48 @@ export async function getGraficaCampos() {
 
 export async function getDesgloseGastos(codCampo) {
   const token = await AsyncStorage.getItem("token");
-  const response = await fetch(`${API_URL}/desgloseGastos?codCampo=${codCampo}`, {
+  const response = await fetch(`${API_URL}/desgloseGastosCampo?codCampo=${codCampo}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      "Authorization": `Bearer ${token}`
+    }
+  });
+
+  const data = await response.json();
+  console.log("RESPUESTA REAL:", data);
+
+  if (!response.ok) {
+
+    throw new Error("Error al obtener el desglose de gastos por campo");
+  }
+
+  return data;
+}
+
+export async function getGraficaCultivos() {
+  const token = await AsyncStorage.getItem("token");
+  const response = await fetch(`${API_URL}/graficaCultivos`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      "Authorization": `Bearer ${token}`
+    }
+  });
+
+  const data = await response.json();
+  console.log("RESPUESTA REAL:", data);
+
+  if (!response.ok) {
+    throw new Error("Error al obtener los grafica cultivos");
+  }
+
+  return data;
+}
+
+export async function getDesgloseGastosCultivo(codFruta) {
+  const token = await AsyncStorage.getItem("token");
+  const response = await fetch(`${API_URL}/desgloseGastosCultivo?codFruta=${codFruta}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
